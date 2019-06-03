@@ -1,0 +1,28 @@
+version: '3'
+services:
+    fup-nginx:
+        image: nginx:1.16
+        container_name: fup-nginx
+        ports:
+            - 80:80
+        volumes:
+            - ".:/usr/share/nginx/html:rw"
+            - "./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro"
+
+    fup-php:
+        image: php:7.3.6-fpm
+        container_name: fup-php
+        volumes:
+            - ".:/usr/share/nginx/html:rw"
+
+    fup-mysql:
+        image: mysql:8.0.16
+        container_name: fup-mysql
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=fup
+            - MYSQL_DATABASE=fup
+            - MYSQL_USER=fup
+            - MYSQL_PASSWORD=fup
+
